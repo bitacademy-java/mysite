@@ -91,7 +91,7 @@ public class UserController {
 		Long no = authUser.getNo();
 		vo.setNo(no);
 		
-		System.out.println(vo);
+		userService.updateUser(vo);
 		
 		return "redirect:/user/update";
 	}
