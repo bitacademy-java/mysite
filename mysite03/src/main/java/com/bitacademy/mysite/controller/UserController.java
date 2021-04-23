@@ -1,7 +1,5 @@
 package com.bitacademy.mysite.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,9 +51,7 @@ public class UserController {
 
 	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(HttpSession session, UserVo vo) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		
+	public String update(@AuthUser UserVo authUser, UserVo vo) {
 		Long no = authUser.getNo();
 		vo.setNo(no);
 		
