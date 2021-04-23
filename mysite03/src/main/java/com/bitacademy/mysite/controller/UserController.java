@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.bitacademy.mysite.security.Auth;
+import com.bitacademy.mysite.security.AuthUser;
 import com.bitacademy.mysite.service.UserService;
 import com.bitacademy.mysite.vo.UserVo;
 
@@ -38,28 +40,21 @@ public class UserController {
 		return "user/login";	
 	}
 
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(HttpSession session, Model model) {
-		// 접근제어
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
+	public String update(@AuthUser UserVo authUser, Model model) {
 		Long no = authUser.getNo();
+		
 		UserVo userVo = userService.getUser(no);
 		model.addAttribute("userVo", userVo);
 		
 		return "user/update";
 	}
 
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update(HttpSession session, UserVo vo) {
-		// 접근제어
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
 		
 		Long no = authUser.getNo();
 		vo.setNo(no);
