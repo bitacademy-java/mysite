@@ -38,32 +38,6 @@ public class UserController {
 		return "user/login";	
 	}
 
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(UserVo vo, HttpSession session) {
-		UserVo authUser = userService.getUser(vo);
-		if(authUser == null) {
-			return "redirect:/user/login?result=fail";
-		}
-		
-		/* 로그인 처리 */
-		session.setAttribute("authUser", authUser);
-		return "redirect:/";	
-	}
-
-	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		// 접근제어
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
-		/* 로그아웃 처리 */
-		session.removeAttribute("authUser");
-		session.invalidate();
-		return "redirect:/";
-	}
-
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(HttpSession session, Model model) {
 		// 접근제어
