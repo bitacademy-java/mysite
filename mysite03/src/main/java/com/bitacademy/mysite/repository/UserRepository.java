@@ -1,12 +1,5 @@
 package com.bitacademy.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,5 +30,9 @@ public class UserRepository {
 	public boolean update(UserVo vo) {
 		int count = sqlSession.insert("user.update", vo);
 		return count == 1;
+	}
+
+	public UserVo findByEmail(String email) {
+		return sqlSession.selectOne("user.findByEmail", email);
 	}
 }
